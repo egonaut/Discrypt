@@ -3219,7 +3219,7 @@ async function processSystemMessage(message, sysmsg) {
 
     switch(messageType) {
         case 'DH KEY': {
-            message.content = "💻 H-hi I would like to know you better";
+            message.content = "💬 Sending keyshare request...";
             if(oldMessage) return false;
 
             let dhKeyPayload = getSystemMessageProperty('dhKey', sysmsg);
@@ -3255,7 +3255,7 @@ async function processSystemMessage(message, sysmsg) {
             catch(e) { break }
         } return true;
         case 'DH RESPONSE': {
-            message.content = "💻 I like you :3, you can have my number";
+            message.content = "💬 Request Accepted!";
             if(oldMessage) return false;
 
             let dhKeyPayload = getSystemMessageProperty('dhKey', sysmsg);
@@ -3295,7 +3295,7 @@ async function processSystemMessage(message, sysmsg) {
             catch(e) { break }
         } return true;
         case 'PERSONAL KEY': {
-            message.content = "💻 Here is my number, now we can talk any time!!";
+            message.content = "💬 Personal Key Sent";
             if(oldMessage) return false;
 
             let keyHashPayload = getSystemMessageProperty('key', sysmsg);
@@ -3326,7 +3326,7 @@ async function processSystemMessage(message, sysmsg) {
             catch(e) { break }
         } return true;
         case 'KEY REQUEST': {
-            message.content = "💻 Hey, can you tell me what this means?";
+            message.content = "💬 Sending Key Request...";
             if(oldMessage) return false;
 
             let requestedKeyPayload = getSystemMessageProperty('requestedKey', sysmsg);
@@ -3334,16 +3334,16 @@ async function processSystemMessage(message, sysmsg) {
             try {
                 let keyHash = Utils.BytesToBase64(Utils.PayloadDecode(requestedKeyPayload));
 
-                Utils.ShareKey(keyHash, message.channel_id, nonForced, message.author); //no need to wait
+                Utils.ShareKey(keyHash, message.channel_id, nonForced, message.author); 
             }
             catch(e) { break }
         } return true;
         case 'KEY SHARE': {
             let status = getSystemMessageProperty('status', sysmsg);
             const statusMsgs = {
-                'OK': "💻 There you go, take good care of it!",
-                'DENIED': "💻 That's a secret!!!",
-                'NOT FOUND': "💻 Huh? I don't know"
+                'OK': "💬 Accepted keyshare!",
+                'DENIED': "💬 Keyshare denied.",
+                'NOT FOUND': "💬 404 - Not Found"
             };
             let statusMsg = statusMsgs[status];
             if(statusMsg == null) break;
